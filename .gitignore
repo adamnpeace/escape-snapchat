@@ -1,0 +1,5 @@
+memories/*
+!memories/.gitignore
+.DS_Store
+memories_history.json
+useful_memories_history.json
