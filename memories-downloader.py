@@ -34,32 +34,12 @@ with open("memories_history.json") as memories_file:
     memories = all_memories
 
 print(
-    "First memory is a {}, taken on {} (found at {}...)".format(
+    "First memory is a {}, taken on {} (available at {}...)".format(
             memories[-1]["Media Type"],
             memories[-1]["Date"],
             memories[-1]["Download Link"][:10]
     )
 )
-
-# Get Download Links
-
-st = datetime.datetime.now()
-for i, memory in enumerate(memories):
-    if i%100 == 0:
-        print("{}: Time Elapsed: {}. Getting URL for date {}:".format(i, memory["Date"], datetime.datetime.now() - st), end=" ")
-    try:
-        link = requests.post(memory["Download Link"]).text
-        if i%100 == 0:
-            print("Success")
-        memory["url"] = link
-    except:
-        if i%100 == 0:
-            print("Failed")
-
-# Save memories JSON _with_ AWS URLs
-
-with open('useful_memories_history.json', 'w') as fp:
-    json.dump(memories, fp)
 
 # Download all memories and record the time taken
 
@@ -69,18 +49,19 @@ if os.path.exists("useful_memories_history.json") and not overwrite:
         memories = data
 else:
     print("Fetching all actual URLs")
+    # Get Download Links
+
     st = datetime.datetime.now()
     for i, memory in enumerate(memories):
-        if i%100 == 0:
-            print("{}: Time Elapsed: {}. Getting URL for date {}:".format(i, memory["Date"], datetime.datetime.now() - st), end=" ")
+        print("{}: Time Elapsed: {}. Getting URL for date {}:".format(i, memory["Date"], datetime.datetime.now() - st), end=" ")
         try:
             link = requests.post(memory["Download Link"]).text
-            if i%100 == 0:
-                print("Success")
+            print("Success")
             memory["url"] = link
         except:
-            if i%100 == 0:
-                print("Failed")
+            print("Failed")
+    # Save memories JSON _with_ AWS URLs
+
     with open('useful_memories_history.json', 'w') as fp:
         json.dump(memories, fp)
 
