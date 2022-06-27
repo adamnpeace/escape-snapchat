@@ -7,6 +7,7 @@ import json
 import requests
 import datetime
 import os
+import shutil
 
 # Helper Functions
 
@@ -21,6 +22,13 @@ def get_ext(memory_media_type):
     if memory["Media Type"] == "PHOTO":
         ext = "jpg"
     return ext
+
+def download_file_from_url(url, filename):
+    with requests.get(url, stream=True) as r:
+        with open(filename, 'wb') as f:
+            shutil.copyfileobj(r.raw, f)
+
+    return filename
 
 overwrite = False # Overwrites existing useful memory metadata file
 
@@ -77,7 +85,7 @@ for memory in memories:
 
     print("Downloading File {}:".format(filename), end=" ")
     try:
-        urllib.request.urlretrieve(memory["url"], filename)
+        download_file_from_url(memory["url"], filename)
         modtime = datetime.datetime.timestamp(memory_datetime)
         os.utime(filename, (modtime, modtime))
         print("Success")
