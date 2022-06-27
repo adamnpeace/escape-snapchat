@@ -53,7 +53,7 @@ else:
 
     st = datetime.datetime.now()
     for i, memory in enumerate(memories):
-        print("{}: Time Elapsed: {}. Getting URL for date {}:".format(i, memory["Date"], datetime.datetime.now() - st), end=" ")
+        print("{}: Time Elapsed: {}. Getting URL for date {}:".format(i, datetime.datetime.now() - st), memory["Date"], end=" ")
         try:
             link = requests.post(memory["Download Link"]).text
             print("Success")
