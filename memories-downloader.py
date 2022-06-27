@@ -19,7 +19,7 @@ def get_datetime(memory_date):
 
 def get_ext(memory_media_type):
     ext = "mp4"
-    if memory["Media Type"] == "PHOTO":
+    if memory["Media Type"] == "Image" or memory["Media Type"] == "PHOTO":
         ext = "jpg"
     return ext
 
