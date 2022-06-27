@@ -31,6 +31,7 @@ def download_file_from_url(url, filename):
     return filename
 
 overwrite = False # Overwrites existing useful memory metadata file
+st = datetime.datetime.now()
 
 # Import Memories Data
 
