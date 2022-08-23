@@ -18,7 +18,7 @@ def get_datetime(memory_date):
 
 def get_ext(memory_media_type):
     ext = "mp4"
-    if memory["Media Type"] == "PHOTO":
+    if memory_media_type in ["PHOTO", "Image"]:
         ext = "jpg"
     return ext
 
@@ -43,6 +43,7 @@ print(
 
 # Download all memories and record the time taken
 
+st = datetime.datetime.now()
 if os.path.exists("useful_memories_history.json") and not overwrite:
     with open("useful_memories_history.json") as fp:
         data = json.load(fp)
@@ -51,7 +52,6 @@ else:
     print("Fetching all actual URLs")
     # Get Download Links
 
-    st = datetime.datetime.now()
     for i, memory in enumerate(memories):
         print("{}: Time Elapsed: {}. Getting URL for date {}:".format(i, memory["Date"], datetime.datetime.now() - st), end=" ")
         try:
